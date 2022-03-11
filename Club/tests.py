@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Meeting, MeetingMinutes, Resource, Event
 import datetime
+from .forms import MeetingForm
 
 # Create your tests here.
 class MeetingTest(TestCase):
@@ -35,3 +36,23 @@ class ResourceTest(TestCase):
 
     def test_string(self):
         self.assertEqual(str(self.resource), 'Dumplings')
+
+class newMeetingForm(TestCase):
+    def test_meetingForm(self):
+        data={
+             'meetingtitle': 'Pi Day', 
+             'meetingdate': '2022-03-14', 
+             'location': 'Seattle Central',
+             'agenda': 'Celebrate Pi Day!'
+        }
+        form = MeetingForm(data)
+        self.assertTrue(form.is_valid)
+
+    def test_Meetingform_Invalid(self):
+        data={
+             'meetingtitle': 'Pi Day', 
+             'meetingdate': '2022-03-14', 
+             'agenda': 'Celebrate Pi Day!'
+        }
+        form = MeetingForm(data)
+        self.assertFalse(form.is_valid)
